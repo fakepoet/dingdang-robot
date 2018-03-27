@@ -156,7 +156,7 @@ class PocketSphinxSTT(AbstractSTTEngine):
             config.set_string('-hmm', os.path.join(hmm_dir, 'en-us/en-us'))
             config.set_string('-lm', vocabulary.decoder_kwargs['lm'])
             config.set_string('-dict', vocabulary.decoder_kwargs['dict'])
-            self._decoder = ps.Decoder(config, **vocabulary.decoder_kwargs)
+            self._decoder = ps.Decoder(config)
         else:
             self._decoder = ps.Decoder(hmm=hmm_dir, logfn=self._logfile,
                                        **vocabulary.decoder_kwargs)
