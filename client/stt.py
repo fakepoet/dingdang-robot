@@ -227,9 +227,13 @@ class PocketSphinxSTT(AbstractSTTEngine):
         self._decoder.process_raw(data, False, True)
         self._decoder.end_utt()
 
-        result = self._decoder.get_hyp()
+        if self._pocketsphinx_v5:
+            hyp = self._decoder.hyp()
+            result = hyp.hypstr if hyp is not None else ''
+        else:
+            result = self._decoder.get_hyp()
 
-        transcribed = [result[0]]
+        transcribed = [result]
         self._logger.info('PocketSphinx 识别到了：%r', transcribed)
         return transcribed
 
