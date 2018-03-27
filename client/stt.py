@@ -112,11 +112,10 @@ class PocketSphinxSTT(AbstractSTTEngine):
         # quirky bug where first import doesn't work
         try:
             import pocketsphinx as ps
-            from pocketsphinx.pocketsphinx import Decoder
         except Exception:
             import pocketsphinx as ps
-            from pocketsphinx.pocketsphinx import Decoder
         self._pocketsphinx_v5 = hasattr(ps.Decoder, 'default_config')
+        self._logger.debug(self._pocketsphinx_v5)
         with tempfile.NamedTemporaryFile(prefix='psdecoder_',
                                          suffix='.log', delete=False) as f:
             self._logfile = f.name
@@ -127,7 +126,7 @@ class PocketSphinxSTT(AbstractSTTEngine):
         # Perform some checks on the hmm_dir so that we can display more
         # meaningful error messages if neccessary
         if not os.path.exists(hmm_dir):
-            hmm_dir = "/usr/share/pocketsphinx/model/en-us/en-us"
+            hmm_dir = "/usr/share/pocketsphinx/model/"
             if not os.path.exists(hmm_dir):
                 msg = ("hmm_dir '%s' does not exist! Please make sure that you " +
                        "have set the correct hmm_dir in your profile.") % hmm_dir
@@ -153,7 +152,7 @@ class PocketSphinxSTT(AbstractSTTEngine):
                                  hmm_dir, ', '.join(missing_hmm_files))
 
         if self._pocketsphinx_v5:
-            config = Decoder.default_config()
+            config = ps.Decoder.default_config()
             config.set_string('-hmm', os.path.join(hmm_dir, 'en-us/en-us'))
             config.set_string('-lm', os.path.join(hmm_dir, 'en-us/en-us.lm.bin'))
             config.set_string('-dict', os.path.join(hmm_dir, 'en-us/cmudict-en-us.dict'))
