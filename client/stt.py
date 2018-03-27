@@ -112,8 +112,10 @@ class PocketSphinxSTT(AbstractSTTEngine):
         # quirky bug where first import doesn't work
         try:
             import pocketsphinx as ps
+            from pocketsphinx.pocketsphinx import Decoder
         except Exception:
             import pocketsphinx as ps
+            from pocketsphinx.pocketsphinx import Decoder
         self._pocketsphinx_v5 = hasattr(ps.Decoder, 'default_config')
         with tempfile.NamedTemporaryFile(prefix='psdecoder_',
                                          suffix='.log', delete=False) as f:
@@ -151,7 +153,7 @@ class PocketSphinxSTT(AbstractSTTEngine):
                                  hmm_dir, ', '.join(missing_hmm_files))
 
         if self._pocketsphinx_v5:
-            config = ps.Decoder.default_config()
+            config = Decoder.default_config()
             config.set_string('-hmm', os.path.join(hmm_dir, 'en-us/en-us'))
             config.set_string('-lm', os.path.join(hmm_dir, 'en-us/en-us.lm.bin'))
             config.set_string('-dict', os.path.join(hmm_dir, 'en-us/cmudict-en-us.dict'))
