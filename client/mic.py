@@ -129,7 +129,7 @@ class Mic:
 
         THRESHOLD_MULTIPLIER = 2.5
         RATE = 16000
-        CHUNK = 1024
+        CHUNK = 4096
 
         # number of seconds to allow to establish threshold
         THRESHOLD_TIME = 1
