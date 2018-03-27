@@ -63,10 +63,10 @@ class Conversation(object):
                 continue
 
             if not self.mic.skip_passive:
-                self._logger.debug("Started listening for keyword '%s'",
+                self._logger.info("Started listening for keyword '%s'",
                                    self.persona)
                 threshold, transcribed = self.mic.passiveListen(self.persona)
-                self._logger.debug("Stopped listening for keyword '%s'",
+                self._logger.info("Stopped listening for keyword '%s'",
                                    self.persona)
 
                 if not transcribed or not threshold:
@@ -74,11 +74,11 @@ class Conversation(object):
                     continue
                 self._logger.info("Keyword '%s' has been said!", self.persona)
             else:
-                self._logger.debug("Skip passive listening")
+                self._logger.info("Skip passive listening")
                 if not self.mic.chatting_mode:
                     self.mic.skip_passive = False
             pixels.wakeup()
-            self._logger.debug("Started to listen actively with threshold: %r",
+            self._logger.info("Started to listen actively with threshold: %r",
                                threshold)
             input = self.mic.activeListenToAllOptions(threshold)
             self._logger.debug("Stopped to listen actively with threshold: %r",
