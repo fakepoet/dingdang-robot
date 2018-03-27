@@ -154,9 +154,8 @@ class PocketSphinxSTT(AbstractSTTEngine):
         if self._pocketsphinx_v5:
             config = ps.Decoder.default_config()
             config.set_string('-hmm', os.path.join(hmm_dir, 'en-us/en-us'))
-            config.set_string('-lm', os.path.join(hmm_dir, 'en-us/en-us.lm.bin'))
-            config.set_string('-dict', os.path.join(hmm_dir, 'en-us/cmudict-en-us.dict'))
-            self._logger.info(vocabulary.decoder_kwargs)
+            config.set_string('-lm', vocabulary.decoder_kwargs['lm'])
+            config.set_string('-dict', vocabulary.decoder_kwargs['dict'])
             self._decoder = ps.Decoder(config, **vocabulary.decoder_kwargs)
         else:
             self._decoder = ps.Decoder(hmm=hmm_dir, logfn=self._logfile,
