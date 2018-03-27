@@ -125,7 +125,7 @@ class PocketSphinxSTT(AbstractSTTEngine):
         # Perform some checks on the hmm_dir so that we can display more
         # meaningful error messages if neccessary
         if not os.path.exists(hmm_dir):
-            hmm_dir = "/usr/share/pocketsphinx/model/hmm/en-us/en-us"
+            hmm_dir = "/usr/share/pocketsphinx/model/en-us/en-us"
             if not os.path.exists(hmm_dir):
                 msg = ("hmm_dir '%s' does not exist! Please make sure that you " +
                        "have set the correct hmm_dir in your profile.") % hmm_dir
